@@ -1,78 +1,40 @@
 <!DOCTYPE html>
 <html><head><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BOBOKUS DATABASE - Cheap Data</title>
+<title>Bobokus - Cheap Data</title>
 <style>
-*{box-sizing:border-box}body{font-family:Arial;margin:0;background:#f4f4f0;padding-bottom:80px;color:#111}
-.top{background:#0a4d2e;color:#fff;padding:12px 14px;position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center}
-.top b{font-size:15px}.top span{font-size:11px;opacity:.8}
-.badge{background:#FFCC00;color:#000;padding:5px 10px;border-radius:20px;font-weight:bold;font-size:12px}
-.card{background:#fff;margin:12px;border-radius:16px;padding:14px;box-shadow:0 2px 8px #0001}
-.green{background:#e6f7ee;border:1px solid #bfe8cd}.yellow{background:#fff8d6;border:1px solid #ffe27a}
-h2{font-size:16px;margin:0 0 8px}
-.nets{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.net{background:#fff;border-radius:14px;padding:14px;text-align:center;border:1px solid #eee;cursor:pointer}
-.net b{font-size:14px}.net small{color:#888}
-.net.mtn{border-top:4px solid #FFCC00}.net.tel{border-top:4px solid #E60000}.net.at{border-top:4px solid #0066ff}.net.mash{border-top:4px solid #000}
-.tabs{display:flex;gap:8px;margin:12px}.tabs button{flex:1;padding:11px;border:none;border-radius:12px;font-weight:bold;background:#ddd;cursor:pointer}.tabs button.on{background:#FFCC00}
-.list{margin:0 12px}.row{background:#fff;display:flex;justify-content:space-between;align-items:center;padding:13px 14px;border-bottom:1px solid #eee;border-radius:12px;margin-bottom:8px}
-.row b{font-size:15px}.row span{color:#555;font-size:13px}
-.buy{background:#FFCC00;border:none;padding:9px 14px;border-radius:10px;font-weight:bold;cursor:pointer}
-input,select{width:100%;padding:13px;margin:7px 0;border-radius:12px;border:1px solid #ddd}
-.quick{display:flex;gap:8px}.quick button{flex:1;padding:10px;border:1px solid #ddd;background:#fff;border-radius:10px;font-weight:bold;cursor:pointer}
-.pay{background:#0a4d2e;color:#fff;border:none;width:100%;padding:15px;border-radius:12px;font-size:16px;font-weight:bold;cursor:pointer}
-.wa{background:#25D366;color:#fff;border:none;padding:12px 16px;border-radius:20px;font-weight:bold;cursor:pointer;position:fixed;right:12px;bottom:90px;z-index:20}
-.nav{position:fixed;bottom:0;left:0;right:0;background:#000;color:#fff;display:flex;justify-content:space-around;padding:12px 0;font-size:12px;z-index:20}
-.nav div{cursor:pointer;text-align:center;opacity:.6}.nav div.on{opacity:1;color:#FFCC00}
-.hidden{display:none}.order{font-size:13px;border-bottom:1px solid #eee;padding:10px 0}.order b{color:#0a4d2e}
-.pop{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center;padding:15px;z-index:99}.box{background:#fff;width:100%;max-width:380px;border-radius:20px;padding:20px}
-</style></head>
-<body>
-<div class="top"><div><b>BOBOKUS DATABASE</b><br><span>Fast. Reliable. Affordable.</span></div><div class="badge">GH₵ <span id="bal">0.50</span></div></div>
-<div id="pHome">
-<div class="card yellow"><b>⚡ Delivery Tracker</b><br><small>MTN deliveries are currently taking 10 to 30 minutes.</small><div style="margin-top:8px;background:#fff;padding:10px;border-radius:10px"><b style="color:#0a4d2e">Estimated delivery time: 10-30 min.</b><br><small>Order placed 11 Nov at 16:21</small></div></div>
-<div class="card"><h2>NETWORKS</h2><div class="nets">
-<div class="net mtn" onclick="goBuy('MTN')"><div style="font-size:22px">🟡</div><b>MTN</b><br><small>DATA</small></div>
-<div class="net at" onclick="goBuy('Telecel')"><div style="font-size:22px">🔵</div><b>AirtelTigo</b><br><small>DATA</small></div>
-<div class="net tel" onclick="goBuy('Telecel')"><div style="font-size:22px">🔴</div><b>Telecel</b><br><small>DATA</small></div>
-<div class="net mash" onclick="goBuy('MashUp')"><div style="font-size:22px">⚫</div><b>MTN MashUp</b><br><small>COMBO</small></div>
-</div></div>
-<div class="card"><h2>WALLET</h2><small>AVAILABLE BALANCE</small><div style="font-size:28px;font-weight:bold">GH₵ <span id="bal2">0.50</span></div><button class="pay" style="margin-top:10px" onclick="showPage('wallet')">TOP UP WALLET</button></div>
-</div>
-<div id="pBuy" class="hidden">
-<div class="tabs"><button id="tMTN" class="on" onclick="setNet('MTN')">MTN</button><button id="tTelecel" onclick="setNet('Telecel')">Telecel</button><button id="tMashUp" onclick="setNet('MashUp')">MTN MashUp</button></div>
-<div style="padding:0 12px"><b>DATA BUNDLES</b></div><div class="list" id="grid"></div>
-</div>
-<div id="pWallet" class="hidden">
-<div class="card green"><small>AVAILABLE</small><div style="font-size:32px;font-weight:bold">GH₵ <span id="bal3">0.50</span></div><small>Funds in wallet can only be used for purchases.</small></div>
-<div class="card"><h2>Deposit</h2><small>3% fee added on Paystack charge</small><input id="dep" type="number" placeholder="e.g. 100" oninput="calc()"><small>Min GH₵10 - Max GH₵10,000</small>
-<div class="quick"><button onclick="setDep(20)">GH₵20</button><button onclick="setDep(50)">GH₵50</button><button onclick="setDep(100)">GH₵100</button><button onclick="setDep(200)">GH₵200</button></div>
-<div style="margin-top:12px;font-size:14px"><div style="display:flex;justify-content:space-between"><span>Wallet credit</span><b id="wCredit">GH₵100.00</b></div><div style="display:flex;justify-content:space-between"><span>Deposit fee (3%)</span><b id="wFee">GH₵3.00</b></div><div style="display:flex;justify-content:space-between;font-size:16px"><span>You pay</span><b id="wPay">GH₵103.00</b></div></div>
-<button class="pay" onclick="topUp()">CONTINUE TO PAY</button></div>
-<div class="card"><h2>Activity</h2><div id="acts"></div></div>
-</div>
-<div id="pOrders" class="hidden"><div class="card"><h2>Orders & Payments History</h2><div id="orders"></div></div></div>
-<button class="wa" onclick="openWA()">💬 WhatsApp</button>
-<div class="nav"><div class="on" id="nHome" onclick="showPage('home')">🏠<br>Home</div><div id="nBuy" onclick="showPage('buy')">🛒<br>Buy data</div><div id="nWallet" onclick="showPage('wallet')">👛<br>Wallet</div><div id="nOrders" onclick="showPage('orders')">📦<br>Orders</div></div>
-<div class="pop" id="pop"><div class="box"><h2 id="payTitle"></h2><div style="background:#FFF3CD;padding:15px;border-radius:14px"><div id="payAmt" style="font-size:28px;font-weight:bold"></div><div>Send to: <b>0544144774</b><br>Adams Ismail</div></div><input id="pName" placeholder="Your Name"><input id="pRec" placeholder="Number to send data to"><button class="pay" style="background:#25D366" onclick="iPaid()">✅ I Have Paid - WhatsApp</button><p onclick="closePop()" style="text-align:center;color:#999;cursor:pointer">Cancel</p></div></div>
+body{font-family:Arial;background:#f2f2f2;margin:0;padding:10px;padding-bottom:80px;text-align:center}
+.header{background:#000;color:#fff;padding:20px 10px 15px;margin:-10px -10px 10px;border-radius:0 0 20px 20px}
+.header h1{margin:5px 0;font-size:36px}.header p{margin:0;line-height:1.5}.header a{color:#4da3ff}
+.tabs{display:flex;gap:8px;justify-content:center}.tabs button{padding:10px 15px;border-radius:20px;border:none;font-weight:bold;cursor:pointer;background:#ddd}.tabs button.active{background:#000;color:#FFCC00}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;text-align:left}
+.card{background:linear-gradient(105deg,#000 55%,#FFCC00 55%);border-radius:18px;padding:12px;color:#fff;min-height:120px}
+.card.telecel{background:linear-gradient(105deg,#000 55%,#E60000 55%)}.card.wide{grid-column:span 2;background:linear-gradient(105deg,#000 60%,#FFCC00 60%)}
+.price{color:#000;font-weight:bold;font-size:18px;text-align:right}.buy{background:#000;color:#fff;border:none;width:100%;padding:9px;border-radius:8px;margin-top:8px;cursor:pointer}
+.logo{font-size:11px;background:#FFCC00;color:#000;padding:3px 6px;border-radius:6px;font-weight:bold}
+.momo{background:#FFF3CD;padding:12px;border-radius:12px;margin:10px 0;font-weight:bold}
+.popup{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;z-index:99;padding:15px}
+.popup-box{background:#fff;width:100%;max-width:380px;border-radius:20px;padding:20px}
+input{width:100%;padding:12px;margin:7px 0;border-radius:10px;border:1px solid #ddd;box-sizing:border-box}
+.paidBtn{background:#25D366;color:#fff;border:none;width:100%;padding:15px;border-radius:12px;font-size:18px;font-weight:bold;cursor:pointer}
+.copyBtn{background:#000;color:#FFCC00;border:none;padding:10px 18px;border-radius:10px;font-weight:bold}
+</style></head><body>
+<div class="header"><h1>BOBOKUS</h1><p>Adams Ismail<br>Cheap Data - Fast Delivery<br><a href="tel:0544144774">0544144774</a></p></div>
+<div class="momo">Pay With MoMo<br>0544144774 - Adams Ismail</div>
+<div class="tabs"><button class="active" onclick="show('MTN',this)">MTN</button><button onclick="show('Telecel',this)">Telecel</button><button onclick="show('MashUp',this)">MashUp</button></div>
+<div class="grid" id="grid"></div>
+<div class="popup" id="popup"><div class="popup-box"><h2>💳 Payment</h2><p id="payTitle"></p><div style="background:#FFF3CD;padding:15px;border-radius:15px"><div style="font-size:28px;font-weight:bold" id="payAmount"></div><div>Send to: <b>0544144774</b><br>Name: Adams Ismail</div><br><button class="copyBtn" onclick="copyNum()">📋 Copy Number</button></div><input id="pName" placeholder="Your Name"><input id="pRec" placeholder="Number to send data to"><button class="paidBtn" onclick="iPaid()">✅ I Have Paid - WhatsApp</button><p onclick="closePopup()" style="color:#999;cursor:pointer">Cancel</p></div></div>
 <script>
-let bundles=[
-{n:'MTN',s:'1GB',p:7},{n:'MTN',s:'2GB',p:9.5},{n:'MTN',s:'3GB',p:13.6},{n:'MTN',s:'4GB',p:17.5},{n:'MTN',s:'5GB',p:21.8},{n:'MTN',s:'6GB',p:25.8},{n:'MTN',s:'8GB',p:33.5},{n:'MTN',s:'10GB',p:41.5},{n:'MTN',s:'15GB',p:61.8},{n:'MTN',s:'20GB',p:81.8},{n:'MTN',s:'25GB',p:101.8},{n:'MTN',s:'30GB',p:121.8},
-{n:'Telecel',s:'1GB',p:7},{n:'Telecel',s:'10GB',p:41},{n:'Telecel',s:'15GB',p:56.5},{n:'Telecel',s:'20GB',p:75.5},{n:'Telecel',s:'25GB',p:92.5},{n:'Telecel',s:'30GB',p:109.5},{n:'Telecel',s:'40GB',p:144.5},
-{n:'MashUp',s:'511 MB',p:14},{n:'MashUp',s:'1.02 GB',p:24},{n:'MashUp',s:'2.01 GB',p:34},{n:'MashUp',s:'3.53 GB',p:39},{n:'MashUp',s:'4.04 GB',p:44}
+const bundles=[
+{n:'MTN',s:'1GB',p:7},{n:'MTN',s:'2GB',p:13},{n:'MTN',s:'3GB',p:20},{n:'MTN',s:'4GB',p:27},{n:'MTN',s:'5GB',p:33},{n:'MTN',s:'6GB',p:40},{n:'MTN',s:'7GB',p:47},{n:'MTN',s:'8GB',p:55},{n:'MTN',s:'9GB',p:62},{n:'MTN',s:'10GB',p:68},{n:'MTN',s:'15GB',p:101},{n:'MTN',s:'20GB',p:138},{n:'MTN',s:'25GB',p:173},{n:'MTN',s:'30GB',p:208},{n:'MTN',s:'35GB',p:243},{n:'MTN',s:'40GB',p:278},{n:'MTN',s:'45GB',p:313},{n:'MTN',s:'50GB',p:348},{n:'MTN',s:'60GB',p:417},{n:'MTN',s:'70GB',p:486},{n:'MTN',s:'80GB',p:557},{n:'MTN',s:'90GB',p:626},{n:'MTN',s:'100GB',p:677},
+{n:'Telecel',s:'1GB',p:6},{n:'Telecel',s:'2GB',p:11},{n:'Telecel',s:'3GB',p:16},{n:'Telecel',s:'4GB',p:21},{n:'Telecel',s:'5GB',p:26},{n:'Telecel',s:'6GB',p:32},{n:'Telecel',s:'7GB',p:36},{n:'Telecel',s:'8GB',p:42},{n:'Telecel',s:'9GB',p:48},{n:'Telecel',s:'10GB',p:52},{n:'Telecel',s:'15GB',p:80},{n:'Telecel',s:'20GB',p:107},{n:'Telecel',s:'25GB',p:134},{n:'Telecel',s:'30GB',p:162},{n:'Telecel',s:'35GB',p:189},{n:'Telecel',s:'40GB',p:218},{n:'Telecel',s:'45GB',p:243},{n:'Telecel',s:'50GB',p:270},{n:'Telecel',s:'60GB',p:328},{n:'Telecel',s:'70GB',p:380},{n:'Telecel',s:'80GB',p:436},{n:'Telecel',s:'90GB',p:489},{n:'Telecel',s:'100GB',p:545},
+{n:'MashUp',s:'511 MB',p:16,desc:'176 MTN mins · 22 other mins · 45 SMS · 30 days'},{n:'MashUp',s:'1.02 GB',p:30,desc:'353 MTN mins · 88 other mins · 88 SMS · 30 days'},{n:'MashUp',s:'2.01 GB',p:40,desc:'397 MTN mins · 114 other mins · 88 SMS · 30 days'}
 ];
-let cur='MTN',sel=null,orders=JSON.parse(localStorage.getItem('bob_orders')||'[]');
-function showPage(p){['Home','Buy','Wallet','Orders'].forEach(x=>{document.getElementById('p'+x).classList.add('hidden');document.getElementById('n'+x).classList.remove('on')});document.getElementById('p'+p.charAt(0).toUpperCase()+p.slice(1)).classList.remove('hidden');document.getElementById('n'+p.charAt(0).toUpperCase()+p.slice(1)).classList.add('on');if(p==='buy')render();if(p==='orders')renderOrders();if(p==='wallet')renderActs();window.scrollTo(0,0)}
-function goBuy(n){showPage('buy');setNet(n)}
-function setNet(n){cur=n;['MTN','Telecel','MashUp'].forEach(x=>document.getElementById('t'+x).classList.remove('on'));document.getElementById('t'+n).classList.add('on');render()}
-function render(){document.getElementById('grid').innerHTML=bundles.filter(b=>b.n===cur).map(b=>`<div class="row"><div><b>${b.s}</b><br><span>GHC ${b.p}.00</span></div><button class="buy" onclick="selectB('${b.n}','${b.s}',${b.p})">Buy now</button></div>`).join('')}
-function selectB(n,s,p){sel={n,s,p};document.getElementById('payTitle').innerText=n+' '+s;document.getElementById('payAmt').innerText='GHC '+p;document.getElementById('pop').style.display='flex'}
-function closePop(){document.getElementById('pop').style.display='none'}
-function iPaid(){let name=document.getElementById('pName').value,rec=document.getElementById('pRec').value;if(!name||!rec)return alert('Enter name + number');orders.unshift({t:new Date().toLocaleString(),item:sel.n+' '+sel.s,amt:sel.p,to:rec});localStorage.setItem('bob_orders',JSON.stringify(orders));let msg=`Hello Bobokus, I HAVE PAID GHC ${sel.p} for ${sel.s} ${sel.n}. Name: ${name}. Send to: ${rec}.`;window.open('https://wa.me/233544144774?text='+encodeURIComponent(msg),'_blank');closePop()}
-function setDep(v){document.getElementById('dep').value=v;calc()}
-function calc(){let v=parseFloat(document.getElementById('dep').value||100);let fee=v*0.03;document.getElementById('wCredit').innerText='GH₵'+v.toFixed(2);document.getElementById('wFee').innerText='GH₵'+fee.toFixed(2);document.getElementById('wPay').innerText='GH₵'+(v+fee).toFixed(2)}
-function topUp(){let v=document.getElementById('dep').value||100;let fee=v*0.03;alert('Top up GH₵'+v+' - You will pay GH₵'+(parseFloat(v)+fee).toFixed(2)+' via Paystack. Send to 0544144774 then WhatsApp us.');openWA()}
-function renderActs(){document.getElementById('acts').innerHTML=orders.slice(0,7).map(o=>`<div class="order">✅ Purchase - ${o.item} - <b>-GH₵${o.amt}</b><br><small>${o.t}</small></div>`).join('')||'<small>No activity yet</small>'}
-function renderOrders(){document.getElementById('orders').innerHTML=orders.map(o=>`<div class="order"><b>Delivered</b> - ${o.item}<br>To: ${o.to} - GH₵${o.amt}<br><small>${o.t}</small></div>`).join('')||'<small>No orders yet.</small>'}
-function openWA(){window.open('https://wa.me/233544144774?text='+encodeURIComponent('Hello Bobokus, I want to buy data'),' _blank')}
-render();calc();
+let cur='MTN',sel=null;
+function show(n,btn){cur=n;document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render();}
+function render(){document.getElementById('grid').innerHTML=bundles.filter(b=>b.n===cur).map(b=>{let cls=b.n==='Telecel'?'card telecel':'card'; if(b.n==='MashUp')cls='card wide'; return `<div class="${cls}"><span class="logo">${b.n==='MashUp'?'MTN MASH UP':b.n}</span><div style="font-size:26px;font-weight:bold;margin-top:8px">${b.s}</div><div style="font-size:12px">${b.desc||'Non Expire'}</div><div class="price">GHC ${b.p}</div><button class="buy" onclick="selectB('${b.n}','${b.s}',${b.p})">Buy Now</button></div>`}).join('');}
+function selectB(n,s,p){sel={n,s,p};document.getElementById('payTitle').innerText=n+' '+s;document.getElementById('payAmount').innerText='GHC '+p;document.getElementById('popup').style.display='flex';}
+function closePopup(){document.getElementById('popup').style.display='none';}
+function copyNum(){navigator.clipboard.writeText('0544144774');alert('Copied: 0544144774');}
+function iPaid(){let name=document.getElementById('pName').value,rec=document.getElementById('pRec').value;if(!name||!rec)return alert('Enter name + number');let msg=`Hello Bobokus, I HAVE PAID GHC ${sel.p} for ${sel.s} ${sel.n}. Name: ${name}. Send to: ${rec}.`;window.open('https://wa.me/233544144774?text='+encodeURIComponent(msg),'_blank');closePopup();}
+render();
 </script></body></html>
